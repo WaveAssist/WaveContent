@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 # Initialize WaveAssist SDK for a downstream node (credits already checked)
 waveassist.init(check_credits=True)
 
-model_name = "google/gemini-2.5-flash"
+model_name = "google/gemini-3-flash-preview"
 max_tokens = 6000
 temperature = 0.4
 

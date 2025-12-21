@@ -545,7 +545,7 @@ try:
 
     # Store extracted non-HTML page data for downstream debugging/visibility
     waveassist.store_data("primary_pages_extracted_data", extracted_pages)
-    model_name = "google/gemini-2.5-flash"
+    model_name = "google/gemini-3-flash-preview"
 
     pages_json = json.dumps(extracted_pages, default=str)
     website_url = website_content.get("url") or waveassist.fetch_data("website_url")

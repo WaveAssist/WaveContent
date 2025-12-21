@@ -48,6 +48,18 @@ else:
         waveassist.store_data("competitor_websites_list", competitor_websites)
     else:
         waveassist.store_data("competitor_websites_list", [])
+    
+    ##Clean up website_url for Crawlee compatibility
+    website_url = waveassist.fetch_data("website_url")
+    if website_url:
+        website_url = website_url.strip()
+        # Convert http:// to https://
+        if website_url.startswith("http://"):
+            website_url = website_url.replace("http://", "https://", 1)
+        # Add https:// if no protocol is present
+        elif not website_url.startswith("https://"):
+            website_url = f"https://{website_url}"
+        waveassist.store_data("website_url", website_url)
 
 print("WaveContent: Credits check complete and initialization finished.")
 
