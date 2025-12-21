@@ -1,12 +1,15 @@
 name: WaveContent
-description: AI-powered content analysis and strategy assistant that audits your website, benchmarks competitors, and delivers actionable recommendations in one report.
-success_message: WaveContent is ready. It will analyze your site and email a full content report when run.
+description: WaveContent: AI-Powered Content Roadmap. The intelligence of a marketing agency, the speed of AI. WaveContent acts as your lead strategist, analyzing every page of your site and your competitors' to deliver a 360-degree marketing package with actionable long-form and social playbooks.
+success_message: WaveContent is ready. It will analyze your site and email a full content roadmap when run.
 
 nodes:
   - key: check_credits_and_init
     name: CheckCreditsAndInit
     file_name: check_credits_and_init.py
     starting_node: true
+    schedule:
+      cron: "30 8 * * 1" # Every: Monday at 8:30 AM UTC
+      timezone: "UTC"
 
   - key: fetch_website_content
     name: FetchWebsiteContent

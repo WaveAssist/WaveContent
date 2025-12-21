@@ -583,9 +583,9 @@ try:
         )
         raise Exception("WaveContent: send_email had no content to send.")
 
-    title = "WaveContent: Content Analysis & Recommendations"
+    title = "WaveContent: Content Roadmap & Strategy"
     if domain:
-        title = f"WaveContent: Content Analysis — {domain}"
+        title = f"WaveContent: Content Roadmap — {domain}"
 
     # 1) Build the email HTML (full report + attachment note)
     email_html_body = f"""

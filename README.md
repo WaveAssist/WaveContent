@@ -1,4 +1,4 @@
-<h1 align="center">WaveContent: AI website content audit</h1>
+<h1 align="center">WaveContent: AI-Powered Content Roadmap</h1>
 
 <p align="center">
   <a href="https://waveassist.io">
@@ -11,7 +11,7 @@
 
 ## Overview
 
-WaveContent crawls your website, segments your pages, audits your **top primary pages** for content + SEO + “LLM readability”, benchmarks competitors’ **content strategy**, mines **People Also Ask / Reddit** for real questions, optionally analyzes your **Twitter/X presence**, and then emails a polished report (HTML + PDF).
+WaveContent: AI-Powered Content Roadmap. The intelligence of a marketing agency, the speed of AI. WaveContent acts as your lead strategist, analyzing every page of your site and your competitors' to deliver a 360-degree marketing package with actionable long-form and social playbooks. It crawls your website, segments your pages, analyzes your **top primary pages** for content + SEO + "LLM readability", benchmarks competitors' **content strategy**, mines **People Also Ask / Reddit** for real questions, optionally analyzes your **Twitter/X presence**, and then emails a polished report (HTML + PDF).
 
 ---
 
@@ -83,7 +83,7 @@ WaveContent runs the following nodes in order (see `WaveContent/config.yaml`):
 
 - **`analyze_primary_content`**
 
-  - Audits up to **5** primary pages for content/structure/copy + SEO + LLM readability.
+  - Analyzes up to **5** primary pages for content/structure/copy + SEO + LLM readability.
   - Stores `primary_pages_extracted_data`, `primary_content_suggestions`, and `seo_report`.
 
 - **`discover_competitors`**
@@ -129,7 +129,7 @@ These are the main keys WaveContent reads/writes via `waveassist.fetch_data()` /
 - **Inputs**: `website_url`, `competitor_websites`, `twitter_handle`
 - **Crawl**: `website_content`, `website_page_0_data` … `website_page_N_data`
 - **Segmentation**: `segregated_website_content`
-- **Primary-page audit**: `primary_pages_extracted_data`, `primary_content_suggestions`, `seo_report`
+- **Primary-page analysis**: `primary_pages_extracted_data`, `primary_content_suggestions`, `seo_report`
 - **Competitors**: `competitor_websites_list`, `competitor_data`, `competitor_analysis`
 - **Intent & questions**: `paa_opportunities`
 - **Social**: `twitter_insights`

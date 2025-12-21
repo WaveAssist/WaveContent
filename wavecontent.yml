@@ -1,0 +1,232 @@
+title: "WaveContent - AI-Powered Content Roadmap"
+key: "wavecontent"
+slug: "wavecontent"
+name: "WaveContent"
+description: "WaveContent: AI-Powered Content Roadmap. The intelligence of a marketing agency, the speed of AI. WaveContent acts as your lead strategist, analyzing every page of your site and your competitors' to deliver a 360-degree marketing package with actionable long-form and social playbooks."
+repo_url: "https://github.com/WaveAssist/WaveContent"
+repo_name: "WaveContent"
+tags:
+  - "ai"
+  - "seo"
+  - "content"
+thumbnail: "/images/templates/wavecontent.png"
+primary_image: "/images/templates/wavecontent.png"
+badges:
+  - "AI Content Agent"
+  - "Premium"
+is_enabled: true
+is_primary: true
+is_premium: true
+is_public: true
+sort_order: 4
+version: "0.0.1"
+video_url: ""
+setup_time: "5 mins"
+success_rate: "94%"
+demo_url: ""
+input_blocks:
+  - key: "BASIC_ANALYSIS"
+    markdown: |
+      You provide:
+      - Website URL: `https://example.com`
+      - Schedule: **On-demand or Weekly**
+      - Email: `user@example.com`
+  - key: "WITH_COMPETITORS"
+    markdown: |
+      You provide:
+      - Website URL: `https://example.com`
+      - Competitor websites: `https://competitor1.com, https://competitor2.com`
+      - Schedule: **On-demand or Weekly**
+      - Email: `user@example.com`
+  - key: "FULL_ANALYSIS"
+    markdown: |
+      You provide:
+      - Website URL: `https://example.com`
+      - Competitor websites: `https://competitor1.com, https://competitor2.com`
+      - Twitter handle: `@brand`
+      - Schedule: **On-demand or Weekly**
+      - Email: `user@example.com`
+
+output_blocks:
+  - key: "BASIC_ANALYSIS"
+    markdown: |
+      **WaveContent Report**
+
+      **Executive Summary**
+      Your website shows strong primary page structure but has opportunities in SEO optimization and content gaps. Top 3 opportunities: improve meta descriptions, add structured data, and expand long-form content.
+
+      **Primary Page Recommendations**
+      - Homepage: Add clear value proposition, improve H1 structure
+      - About: Enhance storytelling, add team section
+      - Product: Include more technical details and use cases
+
+      **SEO & Discoverability**
+      - Missing meta descriptions on 8 pages
+      - No structured data detected
+      - LLM readability: Good (85/100)
+
+      **Content Recommendations**
+      - Long-form: "Complete Guide to [Topic]" (2,500+ words)
+      - Short-form: "5 Quick Tips for [Topic]" blog series
+  - key: "WITH_COMPETITORS"
+    markdown: |
+      **WaveContent Report**
+
+      **Executive Summary**
+      Your content strategy is solid but competitors are publishing 3x more long-form content. Key gaps: missing comparison guides and case studies. Top opportunities: competitor content analysis reveals trending topics you're missing.
+
+      **Competitor Analysis**
+      - Competitor 1: Publishing 12 articles/month, strong in technical content
+      - Competitor 2: Focus on video + blog, high engagement on tutorials
+      - Content trends: Comparison guides, case studies, and "how-to" content performing well
+
+      **Content Gaps**
+      - Missing: Product comparison guides
+      - Missing: Customer success stories
+      - Missing: Industry trend analysis
+  - key: "FULL_ANALYSIS"
+    markdown: |
+      **WaveContent Report**
+
+      **Executive Summary**
+      Comprehensive analysis reveals strong foundation with clear improvement areas. Competitors are ahead in content volume and social engagement. Top opportunities: expand content calendar, improve Twitter engagement, and optimize for featured snippets.
+
+      **Twitter Insights**
+      - Engagement rate: 2.3% (industry avg: 3.1%)
+      - Top performing content: Product updates and tips
+      - Recommendations: Increase educational content, engage with community questions
+
+      **People Also Ask Opportunities**
+      - "How does [product] compare to [competitor]?" (High search volume)
+      - "What are the best practices for [use case]?" (Featured snippet opportunity)
+      - Reddit questions: 15+ unanswered questions in your niche
+
+features:
+  - icon: "search"
+    title: "Comprehensive Website Analysis"
+    desc: "Crawls up to 50 pages, segments content types, and analyzes primary pages for content quality, SEO, and LLM readability."
+  - icon: "users"
+    title: "Competitor Benchmarking"
+    desc: "Discovers and analyzes competitor content strategies, recent updates, trends, and identifies content gaps in your strategy."
+  - icon: "filetext"
+    title: "Actionable Recommendations"
+    desc: "Delivers long-form and short-form content ideas, SEO improvements, and People Also Ask opportunities based on real user queries."
+
+testimonials:
+  - quote: "The competitor analysis alone was worth it. I discovered content gaps I never knew existed and got specific recommendations I could implement immediately."
+    name: "Sarah K."
+    role: "Content Marketing Manager"
+  - quote: "The SEO analysis caught issues our team missed, and the People Also Ask section gave us 20+ content ideas we're now prioritizing. The PDF report is perfect for sharing with stakeholders."
+    name: "Michael R."
+    role: "SEO Director"
+  - quote: "WaveContent saved us weeks of manual research. The Twitter insights combined with competitor analysis gave us a complete picture of our content strategy."
+    name: "Jennifer L."
+    role: "Digital Marketing Lead"
+faqs:
+  - q: "What exactly do I get?"
+    a: "A comprehensive email report with executive summary, primary page recommendations, SEO analysis, content recommendations, competitor analysis, People Also Ask opportunities, and optional Twitter insights. The report is also attached as a PDF."
+  - q: "How many pages does it analyze?"
+    a: "WaveContent crawls up to 50 pages from your website, automatically segments them by type (primary/blog/product/docs/legal), and provides detailed analysis for up to 5 primary pages."
+  - q: "What if I don't provide competitors?"
+    a: "WaveContent will automatically discover up to 5 competitors via web search based on your website's industry and content."
+  - q: "How accurate is the SEO analysis?"
+    a: "The analysis checks meta descriptions, structured data, technical SEO elements, and LLM readability. It provides actionable recommendations based on current SEO best practices."
+  - q: "Can I schedule regular analysis?"
+    a: "Yes, you can schedule WaveContent to run weekly, monthly, or on-demand to track your content strategy improvements over time."
+  - q: "How much does it cost?"
+    a: "It's free to start with $2 credits included. You only pay once credits expire - it's a pay-as-you-go model based on usage."
+pricing:
+  unit: "Credits used per website analysis"
+  cost: "$0.5"
+
+pro_section:
+  badge: "WaveContent Pro"
+  title: "Enterprise-grade content intelligence, tailored to your brand."
+  subtitle: "Private deployments with custom models, delivered in 7 days."
+  highlight:
+    label: "Why customise"
+    title: "Agency-ready and brand-safe"
+    description: "Run WaveContent in your infrastructure with custom crawling rules, brand-specific analysis, and reports tuned to your content strategy and brand voice guidelines."
+  cards:
+    - title: "Custom Crawling Rules"
+      description: "Define which pages to analyze, set crawl depth, exclude specific sections, and integrate with your CMS for automated analysis."
+    - title: "Brand Voice Analysis"
+      description: "Train the AI on your brand guidelines to ensure recommendations align with your tone, style, and messaging strategy."
+    - title: "Multi-Site Analysis"
+      description: "Analyze multiple websites, subdomains, or international sites in a single run with consolidated reporting and cross-site comparisons."
+    - title: "Content Calendar Integration"
+      description: "Automatically sync recommendations to your content calendar, trigger workflows, or update your CMS based on priority scores."
+  cta:
+    label: "Request Custom Build"
+    url: "https://waveassist.io/contact"
+
+partners:
+  - icon: "/images/partners/openrouter.png"
+    name: "OpenRouter"
+  - icon: "/images/partners/openai.png"
+    name: "OpenAI"
+  - icon: "/images/partners/perplexity.png"
+    name: "Perplexity"
+  - icon: "/images/partners/twitter.png"
+    name: "Twitter/X"
+
+numbers:
+  - value: "50"
+    label: "Pages Analyzed Per Run"
+  - value: "5"
+    label: "Primary Pages Analyzed"
+  - value: "10K+"
+    label: "Websites Analyzed"
+  - value: "3min"
+    label: "Setup Time"
+  - value: "15+"
+    label: "AI Models Integrated"
+
+related_articles:
+  - title: "How to conduct a comprehensive content analysis"
+    href: "/blog/wavecontent-ai-powered-content-roadmap"
+  - title: "Scheduling reports with WaveAssist"
+    href: "/blog/workflows-with-waveassist-how-it-works"
+  - title: "Competitor content analysis best practices"
+    href: "/blog/content-strategy-competitive-intelligence"
+related_assistants:
+  - title: "WavePredict"
+    href: "/assistants/wavepredict"
+    desc: "AI-powered stock price forecasts using technical signals, news, and analyst ratings."
+  - title: "WaveCrypto"
+    href: "/assistants/wavecrypto"
+    desc: "AI-powered cryptocurrency price forecasts using technical signals, news sentiment, fundamentals, and analyst ratings."
+  - title: "WaveCommodities"
+    href: "/assistants/wavecommodities"
+    desc: "AI-powered commodity price forecasts using technical signals, news sentiment, fundamentals, and analyst ratings."
+
+seo:
+  title: "WaveContent | AI-Powered Content Roadmap Assistant"
+  meta_description: "WaveContent: AI-powered content roadmap that analyzes your site, benchmarks competitors, and delivers actionable SEO and content recommendations. The intelligence of a marketing agency, the speed of AI. Start free, no card needed."
+  canonical: "https://waveassist.io/assistants/wavecontent"
+  schema_type: "SoftwareApplication"
+  keywords: "AI content roadmap, website content analysis, WaveContent, automated SEO analysis, AI content strategy, content marketing automation, competitor content analysis, SEO recommendations, content gap analysis"
+  og_title: "WaveContent: AI-Powered Content Roadmap for Smarter Content Strategy"
+  og_description: "Deploy AI workflows for comprehensive content roadmaps blending content analysis, SEO checks, and competitor benchmarking—delivered via email. The intelligence of a marketing agency, the speed of AI. Customize with Python on WaveAssist. #AIContentRoadmap #ContentStrategy #SEO #ContentMarketing"
+  og_image: "https://waveassist.io/images/templates/wavecontent/wavecontent.png"
+  og_url: "https://waveassist.io/assistants/wavecontent"
+  og_type: "website"
+  twitter_card: "summary_large_image"
+  twitter_title: "WaveContent — AI-Powered Content Roadmap on WaveAssist"
+  twitter_description: "Get AI-driven content roadmaps in your inbox. Analyze your site, benchmark competitors, and get actionable recommendations. The intelligence of a marketing agency, the speed of AI. #AIContentRoadmap #ContentStrategy #SEO #WaveAssist"
+  twitter_image: "https://waveassist.io/images/templates/wavecontent/wavecontent.png"
+  robots: "index, follow" # Or "noindex" if staging; ensures crawlability
+  schema_additional: |
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "WaveContent",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.5",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      }
+    }  # Extend schema for rich snippets, tying into credit-based pricing

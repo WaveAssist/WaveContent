@@ -551,7 +551,7 @@ try:
     website_url = website_content.get("url") or waveassist.fetch_data("website_url")
 
     prompt = f"""
-You are an expert content strategist, SEO auditor, and LLM-readability specialist.
+You are an expert content strategist, SEO specialist, and LLM-readability specialist.
 
 You will analyze ONLY the Top Primary Pages (up to 5) selected by a prior segmentation step.
 You are given *structured extractions* from each page produced via BeautifulSoup.
