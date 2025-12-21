@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import html
 import io
 from datetime import datetime
@@ -8,12 +6,9 @@ from urllib.parse import urlparse
 
 import waveassist
 
-try:
-    # WeasyPrint is used to generate a PDF attachment containing the full report.
-    # (WaveAssist email supports attachments via `attachment_file`.)
-    from weasyprint import HTML  # type: ignore
-except Exception:
-    HTML = None
+# WeasyPrint is used to generate a PDF attachment containing the full report.
+# (WaveAssist email supports attachments via `attachment_file`.)
+from weasyprint import HTML  # type: ignore
 
 
 # Initialize WaveAssist SDK for a downstream node (credits already checked)
@@ -737,18 +732,15 @@ try:
     pdf_filename_bits.append(datetime.now().strftime("%Y%m%d_%H%M"))
     pdf_filename = "_".join(pdf_filename_bits) + ".pdf"
 
-    if HTML is None:
-        pdf_error = "WeasyPrint is not installed or could not be imported."
-    else:
-        try:
-            pdf_bytes = HTML(string=pdf_html_body).write_pdf()
-            pdf_file = io.BytesIO(pdf_bytes)
-            # WaveAssist SDK reads attachment_file.name for filename.
-            setattr(pdf_file, "name", pdf_filename)
-            pdf_file.seek(0)
-        except Exception as e:
-            pdf_error = f"WeasyPrint PDF generation failed: {e}"
-            pdf_file = None
+    try:
+        pdf_bytes = HTML(string=pdf_html_body).write_pdf()
+        pdf_file = io.BytesIO(pdf_bytes)
+        # WaveAssist SDK reads attachment_file.name for filename.
+        setattr(pdf_file, "name", pdf_filename)
+        pdf_file.seek(0)
+    except Exception as e:
+        pdf_error = f"WeasyPrint PDF generation failed: {e}"
+        pdf_file = None
 
     subject = title
     print("WaveContent: Sending email (summary in body, full report as PDF attachment)...")
