@@ -1,0 +1,98 @@
+name: WaveContent
+description: AI-powered content analysis and strategy assistant that audits your website, benchmarks competitors, and delivers actionable recommendations in one report.
+success_message: WaveContent is ready. It will analyze your site and email a full content report when run.
+
+nodes:
+  - key: check_credits_and_init
+    name: CheckCreditsAndInit
+    file_name: check_credits_and_init.py
+    starting_node: true
+
+  - key: fetch_website_content
+    name: FetchWebsiteContent
+    file_name: fetch_website_content.py
+    run_after:
+      - check_credits_and_init
+
+  - key: segregrate_website_content
+    name: SegregrateWebsiteContent
+    file_name: segregrate_website_content.py
+    run_after:
+      - fetch_website_content
+
+  - key: discover_competitors
+    name: DiscoverCompetitors
+    file_name: discover_competitors.py
+    run_after:
+      - fetch_website_content
+
+  - key: people_also_ask_opportunities
+    name: PeopleAlsoAskOpportunities
+    file_name: people_also_ask_opportunities.py
+    run_after:
+      - fetch_website_content
+
+  - key: collect_twitter_insights
+    name: CollectTwitterInsights
+    file_name: collect_twitter_insights.py
+    run_after:
+      - segregrate_website_content
+
+  - key: analyze_competitors
+    name: AnalyzeCompetitors
+    file_name: analyze_competitors.py
+    run_after:
+      - discover_competitors
+
+  - key: analyze_primary_content
+    name: AnalyzePrimaryContent
+    file_name: analyze_primary_content.py
+    run_after:
+      - analyze_competitors
+      - collect_twitter_insights
+      - people_also_ask_opportunities
+
+  - key: generate_content_recommendations
+    name: GenerateContentRecommendations
+    file_name: generate_content_recommendations.py
+    run_after:
+      - analyze_competitors
+      - collect_twitter_insights
+      - people_also_ask_opportunities
+
+  - key: generate_summary
+    name: GenerateSummary
+    file_name: generate_summary.py
+    run_after:
+      - generate_content_recommendations
+      - analyze_primary_content
+
+  - key: send_email
+    name: SendEmail
+    file_name: send_email.py
+    run_after:
+      - generate_summary
+
+requirements: []
+
+variables:
+  - name: website_url
+    key: website_url
+    value: ""
+    type: "string"
+    is_optional: false
+    helper_message: "Enter the website URL to analyze (e.g., https://example.com)"
+
+  - name: competitor_websites
+    key: competitor_websites
+    value: ""
+    type: "string"
+    is_optional: true
+    helper_message: "Optional: comma-separated competitor URLs (e.g., https://site1.com, https://site2.com)"
+
+  - name: twitter_handle
+    key: twitter_handle
+    value: ""
+    type: "string"
+    is_optional: true
+    helper_message: "Optional: Twitter/X handle to include social insights (e.g., @brand)"
