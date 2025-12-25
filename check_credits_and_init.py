@@ -6,7 +6,7 @@ waveassist.init()
 
 
 # Simple flat estimates for this assistant
-CREDITS_NEEDED_FOR_RUN = 0.2
+CREDITS_NEEDED_FOR_RUN = 0.4
 ESTIMATED_TIME_TO_PROCESS_SECONDS = 300
 
 
