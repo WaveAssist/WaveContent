@@ -1,8 +1,8 @@
-title: "WaveContent - AI-Powered Content Roadmap"
+title: "WaveContent - AI-Powered Content Strategist"
 key: "wavecontent"
 slug: "wavecontent"
 name: "WaveContent"
-description: "WaveContent: AI-Powered Content Roadmap. The intelligence of a marketing agency, the speed of AI. WaveContent acts as your lead strategist, analyzing every page of your site and your competitors' to deliver a 360-degree marketing package with actionable long-form and social playbooks."
+description: "WaveContent: AI-powered content strategist. The intelligence of a marketing agency, the speed of AI. WaveContent acts as your lead strategist, analyzing every page of your site and your competitors' to tell you everything—delivering a 360-degree marketing package with actionable long-form and social playbooks."
 repo_url: "https://github.com/WaveAssist/WaveContent"
 repo_name: "WaveContent"
 tags:
@@ -184,7 +184,7 @@ numbers:
 
 related_articles:
   - title: "How to conduct a comprehensive content analysis"
-    href: "/blog/wavecontent-ai-powered-content-roadmap"
+    href: "/blog/wavecontent-ai-powered-content-strategist"
   - title: "Scheduling reports with WaveAssist"
     href: "/blog/workflows-with-waveassist-how-it-works"
   - title: "Competitor content analysis best practices"
@@ -201,19 +201,19 @@ related_assistants:
     desc: "AI-powered commodity price forecasts using technical signals, news sentiment, fundamentals, and analyst ratings."
 
 seo:
-  title: "WaveContent | AI-Powered Content Roadmap Assistant"
-  meta_description: "WaveContent: AI-powered content roadmap that analyzes your site, benchmarks competitors, and delivers actionable SEO and content recommendations. The intelligence of a marketing agency, the speed of AI. Start free, no card needed."
+  title: "WaveContent | AI-Powered Content Strategist"
+  meta_description: "WaveContent: AI-powered content strategist that analyzes your site, benchmarks competitors, and tells you everything—delivering actionable SEO and content recommendations. The intelligence of a marketing agency, the speed of AI. Start free, no card needed."
   canonical: "https://waveassist.io/assistants/wavecontent"
   schema_type: "SoftwareApplication"
-  keywords: "AI content roadmap, website content analysis, WaveContent, automated SEO analysis, AI content strategy, content marketing automation, competitor content analysis, SEO recommendations, content gap analysis"
-  og_title: "WaveContent: AI-Powered Content Roadmap for Smarter Content Strategy"
-  og_description: "Deploy AI workflows for comprehensive content roadmaps blending content analysis, SEO checks, and competitor benchmarking—delivered via email. The intelligence of a marketing agency, the speed of AI. Customize with Python on WaveAssist. #AIContentRoadmap #ContentStrategy #SEO #ContentMarketing"
+  keywords: "AI content strategist, website content analysis, WaveContent, automated SEO analysis, AI content strategy, content marketing automation, competitor content analysis, SEO recommendations, content gap analysis"
+  og_title: "WaveContent: AI-Powered Content Strategist for Smarter Content Strategy"
+  og_description: "Deploy AI workflows for comprehensive content strategy blending content analysis, SEO checks, and competitor benchmarking—delivered via email. The intelligence of a marketing agency, the speed of AI. Customize with Python on WaveAssist. #AIContentStrategist #ContentStrategy #SEO #ContentMarketing"
   og_image: "https://waveassist.io/images/templates/wavecontent/wavecontent.png"
   og_url: "https://waveassist.io/assistants/wavecontent"
   og_type: "website"
   twitter_card: "summary_large_image"
-  twitter_title: "WaveContent — AI-Powered Content Roadmap on WaveAssist"
-  twitter_description: "Get AI-driven content roadmaps in your inbox. Analyze your site, benchmark competitors, and get actionable recommendations. The intelligence of a marketing agency, the speed of AI. #AIContentRoadmap #ContentStrategy #SEO #WaveAssist"
+  twitter_title: "WaveContent — AI-Powered Content Strategist on WaveAssist"
+  twitter_description: "Get AI-driven content strategy in your inbox. Analyze your site, benchmark competitors, and get actionable recommendations. The intelligence of a marketing agency, the speed of AI. #AIContentStrategist #ContentStrategy #SEO #WaveAssist"
   twitter_image: "https://waveassist.io/images/templates/wavecontent/wavecontent.png"
   robots: "index, follow" # Or "noindex" if staging; ensures crawlability
   schema_additional: |

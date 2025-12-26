@@ -1,4 +1,4 @@
-<h1 align="center">WaveContent: AI-Powered Content Roadmap</h1>
+<h1 align="center">WaveContent: AI-Powered Content Strategist</h1>
 
 <p align="center">
   <a href="https://waveassist.io">
@@ -11,7 +11,7 @@
 
 ## Overview
 
-WaveContent: AI-Powered Content Roadmap. The intelligence of a marketing agency, the speed of AI. WaveContent acts as your lead strategist, analyzing every page of your site and your competitors' to deliver a 360-degree marketing package with actionable long-form and social playbooks. It crawls your website, segments your pages, analyzes your **top primary pages** for content + SEO + "LLM readability", benchmarks competitors' **content strategy**, mines **People Also Ask / Reddit** for real questions, optionally analyzes your **Twitter/X presence**, and then emails a polished report (HTML + PDF).
+WaveContent: AI-powered content strategist. The intelligence of a marketing agency, the speed of AI. WaveContent acts as your lead strategist, analyzing every page of your site and your competitors' to tell you everything—delivering a 360-degree marketing package with actionable long-form and social playbooks. It crawls your website, segments your pages, analyzes your **top primary pages** for content + SEO + "LLM readability", benchmarks competitors' **content strategy**, mines **People Also Ask / Reddit** for real questions, optionally analyzes your **Twitter/X presence**, and then emails a polished report (HTML + PDF).
 
 ---
 
