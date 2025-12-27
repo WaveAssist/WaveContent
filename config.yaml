@@ -110,4 +110,4 @@ variables:
       cron: "30 8 1,15 * *"
     type: "schedule"
     is_optional: true
-    helper_message: "Select schedule for content analysis, default is 1st and 15th at 8:30 AM"
+    helper_message: "Select schedule for content analysis, default is 1st and 15th of each month, at 8:30 AM"
