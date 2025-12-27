@@ -8,7 +8,7 @@ nodes:
     file_name: check_credits_and_init.py
     starting_node: true
     schedule:
-      cron: "30 8 * * 1" # Every: Monday at 8:30 AM UTC
+      cron: "30 8 1,15 * *" # Every: 1st and 15th at 8:30 AM UTC
       timezone: "UTC"
 
   - key: fetch_website_content
@@ -81,6 +81,7 @@ requirements: []
 variables:
   - name: website_url
     key: website_url
+    display_name: Website URL
     value: ""
     type: "string"
     is_optional: false
@@ -88,6 +89,7 @@ variables:
 
   - name: competitor_websites
     key: competitor_websites
+    display_name: Competitor websites
     value: ""
     type: "string"
     is_optional: true
@@ -95,6 +97,7 @@ variables:
 
   - name: twitter_handle
     key: twitter_handle
+    display_name: Twitter handle
     value: ""
     type: "string"
     is_optional: true
