@@ -102,3 +102,12 @@ variables:
     type: "string"
     is_optional: true
     helper_message: "Optional: Twitter/X handle to include social insights (e.g., @brand)"
+
+  - name: schedule
+    key: schedule
+    display_name: Schedule
+    value:
+      cron: "30 8 1,15 * *"
+    type: "schedule"
+    is_optional: true
+    helper_message: "Select schedule for content analysis, default is 1st and 15th at 8:30 AM"
