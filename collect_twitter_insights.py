@@ -31,7 +31,7 @@ def _find_twitter_links_from_website_content(
     page_ids: List[str] = website_content.get("page_ids") or []
     for page_id in page_ids:
         page_key = f"website_{page_id}_data"
-        page_data = waveassist.fetch_data(page_key) or {}
+        page_data = waveassist.fetch_data(page_key, default={})
         social_links = page_data.get("social_links") or []
         for link in social_links:
             try:
@@ -96,17 +96,20 @@ def _build_primary_pages_context(
 
 
 try:
-    # Core upstream data
-    website_content = waveassist.fetch_data("website_content") or {}
+    website_content = waveassist.fetch_data("website_content", default={})
+    if not isinstance(website_content, dict):
+        website_content = {}
     if not website_content:
         raise ValueError(
             "website_content is required for collect_twitter_insights but was not found."
         )
 
-    segregated_website_content = waveassist.fetch_data("segregated_website_content")
+    segregated_website_content = waveassist.fetch_data("segregated_website_content", default={})
+    if not isinstance(segregated_website_content, dict):
+        segregated_website_content = {}
 
-    # 1. Determine Twitter handle / presence
-    user_twitter_handle: Optional[str] = waveassist.fetch_data("twitter_handle")
+    user_twitter_handle_raw = waveassist.fetch_data("twitter_handle", default=None)
+    user_twitter_handle: Optional[str] = str(user_twitter_handle_raw).strip() if user_twitter_handle_raw else None
 
     # Only scan website content for a Twitter link if the user has NOT provided a handle
     if not user_twitter_handle:
@@ -115,16 +118,15 @@ try:
         )
 
     if not user_twitter_handle:
-        waveassist.store_data("twitter_insights", None)
+        waveassist.store_data("twitter_insights", {}, data_type="json")
         raise Exception('No Twitter handle or Twitter/X links found on the website; skipping collect_twitter_insights node.')
 
-    # 2. Build context for primary pages
     primary_pages_context = _build_primary_pages_context(
         website_content, segregated_website_content
     )
 
-    # 3. Optional competition context from discovered competitors (if available)
-    competitor_data = waveassist.fetch_data("competitor_data") or []
+    competitor_data_raw = waveassist.fetch_data("competitor_data", default=[])
+    competitor_data = competitor_data_raw if isinstance(competitor_data_raw, list) else []
 
     # Prepare JSON snippets for the prompt
     website_url = website_content.get("url")
@@ -183,14 +185,14 @@ Guidelines:
     )
 
     if result:
-        twitter_insights = result.model_dump(by_alias=True)
-        waveassist.store_data("twitter_insights", twitter_insights)
+        twitter_insights = result.model_dump()
+        waveassist.store_data("twitter_insights", twitter_insights, data_type="json")
         print("WaveContent: Twitter insights stored as 'twitter_insights'.")
     else:
         print("WaveContent: No result from LLM when collecting Twitter insights.")
-        waveassist.store_data("twitter_insights", None)
+        waveassist.store_data("twitter_insights", {}, data_type="json")
 
 except Exception as e:
     print(f"WaveContent: Error while collecting Twitter insights: {e}")
-    waveassist.store_data("twitter_insights", None)
+    waveassist.store_data("twitter_insights", {}, data_type="json")
 

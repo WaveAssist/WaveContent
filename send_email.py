@@ -387,130 +387,165 @@ def _render_competitor_analysis(competitor_analysis: Any) -> str:
 
 
 def _render_paa(paa_opportunities: Any, trending_topics: Any) -> str:
-    if not isinstance(paa_opportunities, dict):
-        paa_opportunities = {}
+    try:
+        if not isinstance(paa_opportunities, dict):
+            paa_opportunities = {}
 
-    google_paa_queries = _coerce_list(paa_opportunities.get("google_paa_queries"))
-    reddit_questions = _coerce_list(paa_opportunities.get("reddit_questions"))
-    trending = _coerce_list(trending_topics)
+        google_paa_queries = _coerce_list(paa_opportunities.get("google_paa_queries"))
+        reddit_questions = _coerce_list(paa_opportunities.get("reddit_questions"))
+        trending = _coerce_list(trending_topics)
 
-    google_html = ""
-    if google_paa_queries:
-        items = []
-        for q in google_paa_queries:
-            if not isinstance(q, dict):
-                continue
-            question = str(q.get("question") or "").strip()
-            src = str(q.get("source_url") or "").strip()
-            snippet = str(q.get("context_snippet") or "").strip()
-            if not question:
-                continue
-            items.append(
-                f"""
-                <li>
-                  <div><strong>{_esc(question)}</strong></div>
-                  {f"<div class='muted'>Source: {_link(src, label=src)}</div>" if src else ""}
-                  {f"<div class='muted'>{_esc(snippet)}</div>" if snippet else ""}
-                </li>
-                """
-            )
-        if items:
-            google_html = "<ul>" + "".join(items) + "</ul>"
+        google_html = ""
+        if google_paa_queries:
+            items = []
+            for q in google_paa_queries:
+                if not isinstance(q, dict):
+                    continue
+                question = str(q.get("question") or "").strip()
+                src = str(q.get("source_url") or "").strip()
+                snippet = str(q.get("context_snippet") or "").strip()
+                if not question:
+                    continue
+                items.append(
+                    f"""
+                    <li>
+                      <div><strong>{_esc(question)}</strong></div>
+                      {f"<div class='muted'>Source: {_link(src, label=src)}</div>" if src else ""}
+                      {f"<div class='muted'>{_esc(snippet)}</div>" if snippet else ""}
+                    </li>
+                    """
+                )
+            if items:
+                google_html = "<ul>" + "".join(items) + "</ul>"
 
-    reddit_html = ""
-    if reddit_questions:
-        items = []
-        for q in reddit_questions:
-            if not isinstance(q, dict):
-                continue
-            question = str(q.get("question") or "").strip()
-            subreddit = str(q.get("subreddit") or "").strip()
-            url = str(q.get("url") or "").strip()
-            upvotes = q.get("upvotes")
-            snippet = str(q.get("context_snippet") or "").strip()
-            if not question:
-                continue
-            meta_bits = []
-            if subreddit:
-                meta_bits.append(f"r/{subreddit}")
-            if upvotes is not None and str(upvotes).strip() != "":
-                meta_bits.append(f"↑ {upvotes}")
-            meta = " · ".join(meta_bits)
-            items.append(
-                f"""
-                <li>
-                  <div><strong>{_link(url, label=question) if url else _esc(question)}</strong></div>
-                  {f"<div class='muted'>{_esc(meta)}</div>" if meta else ""}
-                  {f"<div class='muted'>{_esc(snippet)}</div>" if snippet else ""}
-                </li>
-                """
-            )
-        if items:
-            reddit_html = "<ul>" + "".join(items) + "</ul>"
+        reddit_html = ""
+        if reddit_questions:
+            items = []
+            for q in reddit_questions:
+                if not isinstance(q, dict):
+                    continue
+                question = str(q.get("question") or "").strip()
+                subreddit = str(q.get("subreddit") or "").strip()
+                url = str(q.get("url") or "").strip()
+                upvotes = q.get("upvotes")
+                snippet = str(q.get("context_snippet") or "").strip()
+                if not question:
+                    continue
+                meta_bits = []
+                if subreddit:
+                    meta_bits.append(f"r/{subreddit}")
+                if upvotes is not None and str(upvotes).strip() != "":
+                    meta_bits.append(f"↑ {upvotes}")
+                meta = " · ".join(meta_bits)
+                items.append(
+                    f"""
+                    <li>
+                      <div><strong>{_link(url, label=question) if url else _esc(question)}</strong></div>
+                      {f"<div class='muted'>{_esc(meta)}</div>" if meta else ""}
+                      {f"<div class='muted'>{_esc(snippet)}</div>" if snippet else ""}
+                    </li>
+                    """
+                )
+            if items:
+                reddit_html = "<ul>" + "".join(items) + "</ul>"
 
-    trending_html = _ul(trending)
+        trending_html = _ul(trending)
 
-    body = ""
-    # Only show the three requested blocks; box them for readability.
-    if google_html:
-        body += f"""
-        <div class="card section-card">
-          <h3 class="card-title">Google "People Also Ask" questions</h3>
-          {google_html}
-        </div>
-        """
-    if reddit_html:
-        body += f"""
-        <div class="card section-card">
-          <h3 class="card-title">Reddit / community questions</h3>
-          {reddit_html}
-        </div>
-        """
-    if trending_html:
-        body += f"""
-        <div class="card section-card">
-          <h3 class="card-title">Trending topics</h3>
-          {trending_html}
-        </div>
-        """
+        body = ""
+        # Only show the three requested blocks; box them for readability.
+        if google_html:
+            body += f"""
+            <div class="card section-card">
+              <h3 class="card-title">Google "People Also Ask" questions</h3>
+              {google_html}
+            </div>
+            """
+        if reddit_html:
+            body += f"""
+            <div class="card section-card">
+              <h3 class="card-title">Reddit / community questions</h3>
+              {reddit_html}
+            </div>
+            """
+        if trending_html:
+            body += f"""
+            <div class="card section-card">
+              <h3 class="card-title">Trending topics</h3>
+              {trending_html}
+            </div>
+            """
 
-    return body
+        return body
+    except:
+        return ""
 
 
 try:
-    website_url = (
-        str(waveassist.fetch_data("website_url") or "").strip()
-        or str((waveassist.fetch_data("website_content") or {}).get("url") or "").strip()
-    )
+    website_url_raw = waveassist.fetch_data("website_url", default="")
+    website_content_fetched = waveassist.fetch_data("website_content", default={})
+    website_url = str(website_url_raw or "").strip()
+    if not website_url and isinstance(website_content_fetched, dict):
+        website_url = str(website_content_fetched.get("url") or "").strip()
     domain = _domain_label(website_url) if website_url else ""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
 
-    # Core analysis outputs
-    executive_summary = waveassist.fetch_data("executive_summary") or {}
-    primary_content_suggestions = waveassist.fetch_data("primary_content_suggestions") or []
-    seo_report = waveassist.fetch_data("seo_report") or {}
-    content_recommendations = waveassist.fetch_data("content_recommendations") or {}
-    competitor_analysis = waveassist.fetch_data("competitor_analysis") or {}
-    paa_opportunities = waveassist.fetch_data("paa_opportunities") or {}
-    twitter_insights = waveassist.fetch_data("twitter_insights") or {}
+    executive_summary = waveassist.fetch_data("executive_summary", default={})
+    primary_content_suggestions = waveassist.fetch_data("primary_content_suggestions", default=[])
+    seo_report = waveassist.fetch_data("seo_report", default={})
+    content_recommendations = waveassist.fetch_data("content_recommendations", default={})
+    competitor_analysis = waveassist.fetch_data("competitor_analysis", default={})
+    paa_opportunities = waveassist.fetch_data("paa_opportunities", default={})
+    twitter_insights = waveassist.fetch_data("twitter_insights", default={})
+    if not isinstance(executive_summary, dict):
+        executive_summary = {}
+    if not isinstance(primary_content_suggestions, list):
+        primary_content_suggestions = []
+    if not isinstance(seo_report, dict):
+        seo_report = {}
+    if not isinstance(content_recommendations, dict):
+        content_recommendations = {}
+    if not isinstance(competitor_analysis, dict):
+        competitor_analysis = {}
+    if not isinstance(paa_opportunities, dict):
+        paa_opportunities = {}
+    if not isinstance(twitter_insights, dict):
+        twitter_insights = {}
 
-    # Render sections (priority order requested)
-    summary_html = _render_executive_summary(executive_summary)
+    try:
+        summary_html = _render_executive_summary(executive_summary)
+    except Exception as e:
+        print(f"WaveContent: Error rendering executive summary: {e}")
+        summary_html = ""
     if not summary_html.strip():
-        # Keep the email readable even if summary is missing.
         summary_html = "<p class='muted'>Executive summary was not available for this run.</p>"
 
-    primary_html = _render_primary_content(primary_content_suggestions)
-    seo_html = _render_seo_report(seo_report)
-    if seo_html.strip():
-        # Keep this section boxed like others (requested).
-        seo_html = f"<div class='card section-card'>{seo_html}</div>"
-
-    recos_html = _render_content_recommendations(content_recommendations)
-
-    competitors_html = _render_competitor_analysis(competitor_analysis)
-    paa_html = _render_paa(paa_opportunities, trending_topics=twitter_insights.get("trending_topics"))
-
+    try:
+        primary_html = _render_primary_content(primary_content_suggestions)
+    except Exception as e:
+        print(f"WaveContent: Error rendering primary content: {e}")
+        primary_html = ""
+    try:
+        seo_html = _render_seo_report(seo_report)
+        if seo_html.strip():
+            seo_html = f"<div class='card section-card'>{seo_html}</div>"
+    except Exception as e:
+        print(f"WaveContent: Error rendering SEO report: {e}")
+        seo_html = ""
+    try:
+        recos_html = _render_content_recommendations(content_recommendations)
+    except Exception as e:
+        print(f"WaveContent: Error rendering content recommendations: {e}")
+        recos_html = ""
+    try:
+        competitors_html = _render_competitor_analysis(competitor_analysis)
+    except Exception as e:
+        print(f"WaveContent: Error rendering competitor analysis: {e}")
+        competitors_html = ""
+    try:
+        paa_html = _render_paa(paa_opportunities, trending_topics=twitter_insights.get("trending_topics") or [])
+    except Exception as e:
+        print(f"WaveContent: Error rendering PAA: {e}")
+        paa_html = ""
     # Email "Sections" list (non-clickable). Many email clients don't reliably support in-email anchors.
     sections_present: List[str] = ["Executive summary"]
     if primary_html.strip():
@@ -570,12 +605,17 @@ try:
         </div>
         """
         subject = "WaveContent: Report unavailable"
-        waveassist.send_email(subject=subject, html_content=html_body)
+        try:
+            waveassist.send_email(subject=subject, html_content=html_body, raise_on_failure=False)
+        except Exception:
+            pass
         waveassist.store_data(
             "display_output",
-            {"title": subject, "html_content": html_body, "status": "error"},
+            {"title": subject, "html_content": html_body, "status": "no_content"},
             run_based=True,
+            data_type="json",
         )
+        print("WaveContent: send_email node completed (no content to send).")
         raise Exception("WaveContent: send_email had no content to send.")
 
     title = "WaveContent: Content Strategy Report"
@@ -748,18 +788,20 @@ try:
         subject=subject,
         html_content=email_html_body,
         attachment_file=pdf_file,
+        raise_on_failure=False,
     )
+    email_status = "success" if success else "email_failed"
     if success:
         print("WaveContent: Email sent successfully.")
     else:
-        print("WaveContent: Email sending returned unsuccessful response.")
+        print("WaveContent: Email sending failed (validation or API); run not lost.")
 
     waveassist.store_data(
         "display_output",
         {
             "title": subject,
             "html_content": email_html_body,
-            "status": "success" if success else "error",
+            "status": email_status,
             "pdf_attachment": {
                 "enabled": True,
                 "file_name": pdf_filename,
@@ -768,18 +810,31 @@ try:
             },
         },
         run_based=True,
+        data_type="json",
     )
     print("WaveContent: send_email node completed.")
 
 except Exception as e:
     print(f"WaveContent: Error in send_email node: {e}")
-    # Store a fallback display_output so the run UI has something to show
-    fallback = {
-        "title": "WaveContent: Email generation error",
-        "html_content": f"<p>WaveContent failed to generate/send the email due to an error: <strong>{_esc(e)}</strong></p>",
-        "status": "error",
+    fallback_html = f"""
+    <div style="text-align:center; padding:40px;">
+      <h2>WaveContent: Email generation error</h2>
+      <p>An error occurred while generating the report. Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
+    </div>
+    """
+    display_output = {
+        "html_content": fallback_html,
+        "status": "email_build_failed",
     }
-    waveassist.store_data("display_output", fallback, run_based=True)
+    try:
+        waveassist.send_email(
+            subject="WaveContent: Report Error",
+            html_content=fallback_html,
+            raise_on_failure=False,
+        )
+    except Exception:
+        pass
+    waveassist.store_data("display_output", display_output, run_based=True, data_type="json")
     raise
 
 

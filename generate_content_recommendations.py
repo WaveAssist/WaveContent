@@ -80,21 +80,21 @@ def _json_dumps(data: Any) -> str:
 
 
 try:
-    # Core site understanding
-    website_content: Dict[str, Any] = waveassist.fetch_data("website_content") or {}
+    website_content = waveassist.fetch_data("website_content", default={})
+    if not isinstance(website_content, dict):
+        website_content = {}
     if not website_content:
         raise ValueError(
             "website_content is required for generate_content_recommendations but was not found."
         )
 
-    segregated_website_content: Dict[str, Any] = (
-        waveassist.fetch_data("segregated_website_content") or {}
-    )
+    segregated_website_content = waveassist.fetch_data("segregated_website_content", default={})
+    if not isinstance(segregated_website_content, dict):
+        segregated_website_content = {}
 
-    # Prior analyses
-    competitor_analysis = waveassist.fetch_data("competitor_analysis")
-    paa_opportunities = waveassist.fetch_data("paa_opportunities")
-    twitter_insights = waveassist.fetch_data("twitter_insights")
+    competitor_analysis = waveassist.fetch_data("competitor_analysis", default={})
+    paa_opportunities = waveassist.fetch_data("paa_opportunities", default={})
+    twitter_insights = waveassist.fetch_data("twitter_insights", default={})
 
     # Build prompt payloads
     website_content_json = _json_dumps(website_content)
@@ -165,19 +165,19 @@ Twitter insights (optional):
     )
 
     if result:
-        data = result.model_dump(by_alias=True)
-        waveassist.store_data("content_recommendations", data.get("content_recommendations"))
-        waveassist.store_data("content_gaps", data.get("content_gaps"))
+        data = result.model_dump()
+        waveassist.store_data("content_recommendations", data.get("content_recommendations") or {}, data_type="json")
+        waveassist.store_data("content_gaps", data.get("content_gaps") or {}, data_type="json")
         print("WaveContent: Stored 'content_recommendations' and 'content_gaps'.")
     else:
-        waveassist.store_data("content_recommendations", None)
-        waveassist.store_data("content_gaps", None)
+        waveassist.store_data("content_recommendations", {}, data_type="json")
+        waveassist.store_data("content_gaps", {}, data_type="json")
         print("WaveContent: No result from LLM when generating content recommendations.")
 
 except Exception as e:
     print(f"WaveContent: Error while generating content recommendations: {e}")
-    waveassist.store_data("content_recommendations", None)
-    waveassist.store_data("content_gaps", None)
+    waveassist.store_data("content_recommendations", {}, data_type="json")
+    waveassist.store_data("content_gaps", {}, data_type="json")
     raise
 
 

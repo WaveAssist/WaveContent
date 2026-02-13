@@ -113,8 +113,8 @@ async def crawl_site(start_url: str) -> List[Dict[str, Any]]:
 
 ##Primary code here
 print("WaveContent: Starting website content fetch with Crawlee HTTP crawler...")
-website_url = waveassist.fetch_data("website_url")
-if not website_url:
+website_url = waveassist.fetch_data("website_url", default="")
+if not website_url or not isinstance(website_url, str) or not website_url.strip():
     raise ValueError("website_url is required but was not provided.")
 
 try:
@@ -123,48 +123,48 @@ try:
     if not pages_raw:
         raise RuntimeError("No pages were crawled from the website.")
 
-    # Build website_pages array with lightweight metadata + page_id
+    # Build website_pages array with lightweight metadata + page_id; per-page try/except so one failure does not lose all.
     website_pages: List[Dict[str, Any]] = []
     page_ids: List[str] = []
 
     for idx, page in enumerate(pages_raw):
         page_id = f"page_{idx}"
-        page_ids.append(page_id)
+        try:
+            # Store full page data (including full_html) in a separate variable
+            waveassist.store_data(f"website_{page_id}_data", page, data_type="json")
+            page_ids.append(page_id)
+            # Summary entry for website_pages array (exclude full_html to keep it lighter)
+            website_pages.append(
+                {
+                    "page_id": page_id,
+                    "url": page.get("url"),
+                    "title": page.get("title"),
+                    "meta_description": page.get("meta_description"),
+                    "headings": page.get("headings"),
+                    "links": page.get("links"),
+                    "text_snippet": page.get("text_snippet"),
+                }
+            )
+        except Exception as e:
+            print(f"WaveContent: Error storing page {page_id}: {e}")
+            # Skip this page; continue with others so partial progress is preserved
 
-        # Store full page data (including full_html) in a separate variable
-        waveassist.store_data(f"website_{page_id}_data", page)
+    if not website_pages:
+        raise RuntimeError("No pages could be stored from the crawl.")
 
-        # Summary entry for website_pages array (exclude full_html to keep it lighter)
-        website_pages.append(
-            {
-                "page_id": page_id,
-                "url": page.get("url"),
-                "title": page.get("title"),
-                "meta_description": page.get("meta_description"),
-                "headings": page.get("headings"),
-                "links": page.get("links"),
-                "text_snippet": page.get("text_snippet"),
-            }
-        )
-
-    # Use same 20 pages as "key" pages for now
+    # Use same pages as "key" pages for now
     key_pages = website_pages
-    key_page_urls = [p["url"] for p in key_pages]
-
-    # Assign simple IDs to pages and store each page separately
-    # (page_ids already built above; each page stored as website_page_{id}_data)
+    key_page_urls = [p["url"] for p in key_pages if p.get("url")]
 
     website_content = {
         "url": website_url,
-        # Lightweight array of page summaries; full dumps are in website_page_{id}_data
         "pages": website_pages,
         "page_ids": page_ids,
         "sitemap": None,
         "main_pages": key_page_urls,
     }
 
-    # Store a single clean variable with all website content
-    waveassist.store_data("website_content", website_content)
+    waveassist.store_data("website_content", website_content, data_type="json")
 
     print("WaveContent: Website content crawled and stored successfully.")
 

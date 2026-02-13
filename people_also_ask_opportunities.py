@@ -42,7 +42,9 @@ class PAAOpportunitiesResult(BaseModel):
 print("WaveContent: Starting People Also Ask & question-opportunity analysis...")
 
 try:
-    website_content = waveassist.fetch_data("website_content") or {}
+    website_content = waveassist.fetch_data("website_content", default={})
+    if not isinstance(website_content, dict):
+        website_content = {}
     if not website_content:
         raise ValueError(
             "website_content is required for people_also_ask_opportunities but was not found."
@@ -131,23 +133,23 @@ Guidelines:
         )
 
         if result:
-            paa_opportunities = result.model_dump(by_alias=True)
-            waveassist.store_data("paa_opportunities", paa_opportunities)
+            paa_opportunities = result.model_dump()
+            waveassist.store_data("paa_opportunities", paa_opportunities, data_type="json")
             print(
                 "WaveContent: People Also Ask opportunities stored as 'paa_opportunities'."
             )
         else:
             print("WaveContent: No result from LLM when generating People Also Ask opportunities.")
-            waveassist.store_data("paa_opportunities",None)
+            waveassist.store_data("paa_opportunities", {}, data_type="json")
 
     except Exception as e:
         print(f"WaveContent: Error while generating People Also Ask opportunities: {e}")
-        waveassist.store_data("paa_opportunities",None)
+        waveassist.store_data("paa_opportunities", {}, data_type="json")
         raise
 
 except Exception as e:
     print(f"WaveContent: Error in people_also_ask_opportunities node: {e}")
-    waveassist.store_data("paa_opportunities",None)
+    waveassist.store_data("paa_opportunities", {}, data_type="json")
     raise
 
 

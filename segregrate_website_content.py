@@ -25,7 +25,9 @@ class SegregatedWebsiteContentResult(BaseModel):
 
 print("WaveContent: Starting website content segregation...")
 
-website_content = waveassist.fetch_data("website_content")
+website_content = waveassist.fetch_data("website_content", default={})
+if not isinstance(website_content, dict):
+    website_content = {}
 
 if not website_content:
     raise ValueError(
@@ -109,14 +111,14 @@ try:
     )
 
     if result:
-        segregated = result.model_dump(by_alias=True)
-        waveassist.store_data("segregated_website_content", segregated)
+        segregated = result.model_dump()
+        waveassist.store_data("segregated_website_content", segregated, data_type="json")
         print("WaveContent: Segregated website content stored as 'segregated_website_content'.")
     else:
-        # Store a minimal error object so downstream nodes can fail gracefully if needed
         waveassist.store_data(
             "segregated_website_content",
             {"error": "segmentation_failed_or_no_result"},
+            data_type="json",
         )
         print("WaveContent: No result from LLM when segregating website content.")
 
@@ -125,7 +127,8 @@ except Exception as e:
     waveassist.store_data(
         "segregated_website_content",
         {"error": f"segmentation_error: {e}"},
+        data_type="json",
     )
-    raise
+    # Do not re-raise so the pipeline continues; downstream nodes can handle missing/error segregation.
 
 

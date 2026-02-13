@@ -23,13 +23,17 @@ class DiscoverCompetitorsResult(BaseModel):
 
 print("WaveContent: Starting competitor discovery...")
 
-website_url = waveassist.fetch_data("website_url")
-website_content = waveassist.fetch_data("website_content")
-user_competitors: List[str] = waveassist.fetch_data("competitor_websites_list") or []
+website_url = waveassist.fetch_data("website_url", default="")
+website_content = waveassist.fetch_data("website_content", default={})
+user_competitors_raw = waveassist.fetch_data("competitor_websites_list", default=[])
+user_competitors: List[str] = user_competitors_raw if isinstance(user_competitors_raw, list) else []
 if len(user_competitors) >= 4:
     raise Exception("Competetion provided by user, no need to process this node")
 
-pages = website_content.get("pages") or []
+pages = website_content.get("pages") or [] if isinstance(website_content, dict) else []
+if not pages:
+    waveassist.store_data("competitor_data", [], data_type="json")
+    raise ValueError("website_content.pages is empty; cannot discover competitors.")
 
 # Heuristic: use page whose URL matches website_url; fall back to the first page (page_0)
 home_page = None
@@ -98,18 +102,18 @@ try:
     )
 
     if result:
-        data = result.model_dump(by_alias=True)
+        data = result.model_dump()
         competitor_data = data.get("competitor_data", []) or []
         competitor_data = competitor_data[:5]
-        waveassist.store_data("competitor_data", competitor_data)
+        waveassist.store_data("competitor_data", competitor_data, data_type="json")
         print("WaveContent: Competitor data stored as 'competitor_data'.")
     else:
-        waveassist.store_data("competitor_data", [])
+        waveassist.store_data("competitor_data", [], data_type="json")
         print("WaveContent: No result from LLM when discovering competitors.")
 
 except Exception as e:
     print(f"WaveContent: Error while discovering competitors: {e}")
-    waveassist.store_data("competitor_data", [])
+    waveassist.store_data("competitor_data", [], data_type="json")
     raise
 
 
