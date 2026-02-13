@@ -42,15 +42,32 @@ def _json_dumps(data: Any) -> str:
         return "{}"
 
 try:
-    # Inputs: use derived analysis outputs only (avoid raw website crawl + segregated content)
-    website_url = waveassist.fetch_data("website_url") or ""
-    primary_content_suggestions = waveassist.fetch_data("primary_content_suggestions") or {}
-    seo_report = waveassist.fetch_data("seo_report") or {}
-    competitor_analysis = waveassist.fetch_data("competitor_analysis") or {}
-    paa_opportunities = waveassist.fetch_data("paa_opportunities") or {}
-    twitter_insights = waveassist.fetch_data("twitter_insights") or {}
-    content_recommendations = waveassist.fetch_data("content_recommendations") or {}
-    content_gaps = waveassist.fetch_data("content_gaps") or {}
+    website_url = waveassist.fetch_data("website_url", default="")
+    if not isinstance(website_url, str):
+        website_url = ""
+    else:
+        website_url = website_url.strip()
+    primary_content_suggestions = waveassist.fetch_data("primary_content_suggestions", default=[])
+    if not isinstance(primary_content_suggestions, list):
+        primary_content_suggestions = []
+    seo_report = waveassist.fetch_data("seo_report", default={})
+    if not isinstance(seo_report, dict):
+        seo_report = {}
+    competitor_analysis = waveassist.fetch_data("competitor_analysis", default={})
+    if not isinstance(competitor_analysis, dict):
+        competitor_analysis = {}
+    paa_opportunities = waveassist.fetch_data("paa_opportunities", default={})
+    if not isinstance(paa_opportunities, dict):
+        paa_opportunities = {}
+    twitter_insights = waveassist.fetch_data("twitter_insights", default={})
+    if not isinstance(twitter_insights, dict):
+        twitter_insights = {}
+    content_recommendations = waveassist.fetch_data("content_recommendations", default={})
+    if not isinstance(content_recommendations, dict):
+        content_recommendations = {}
+    content_gaps = waveassist.fetch_data("content_gaps", default={})
+    if not isinstance(content_gaps, dict):
+        content_gaps = {}
 
     # Pass analysis outputs fully (no trimming/reshaping); exclude raw website crawl + segregated content.
     inputs_payload = {
@@ -93,8 +110,8 @@ Inputs (JSON):
     )
 
     if result and result.executive_summary:
-        executive_summary = result.executive_summary.model_dump(by_alias=True)
-        waveassist.store_data("executive_summary", executive_summary)
+        executive_summary = result.executive_summary.model_dump()
+        waveassist.store_data("executive_summary", executive_summary, data_type="json")
         print("WaveContent: Stored 'executive_summary'.")
     else:
         fallback = {
@@ -102,7 +119,7 @@ Inputs (JSON):
             "key_findings": [],
             "top_opportunities": [],
         }
-        waveassist.store_data("executive_summary", fallback)
+        waveassist.store_data("executive_summary", fallback, data_type="json")
         print("WaveContent: No result from LLM when generating summary; stored fallback.")
 
 except Exception as e:
@@ -112,7 +129,7 @@ except Exception as e:
         "key_findings": [],
         "top_opportunities": [],
     }
-    waveassist.store_data("executive_summary", fallback)
+    waveassist.store_data("executive_summary", fallback, data_type="json")
     raise
 
 

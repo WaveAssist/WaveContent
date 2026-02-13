@@ -27,39 +27,36 @@ if not success:
     display_output = {
         "html_content": "<p>Credits were not available, the WaveContent run was skipped.</p>",
     }
-    waveassist.store_data("display_output", display_output, run_based=True)
+    waveassist.store_data("display_output", display_output, run_based=True, data_type="json")
     raise Exception("Credits were not available, the WaveContent run was skipped.")
 else:
     waveassist.store_data(
         "tentative_time_to_process",
         str(time_to_process),
         run_based=True,
+        data_type="string",
     )
     waveassist.store_data(
         "credits_needed_for_run",
-        credits_needed_for_run,
+        str(credits_needed_for_run),
         run_based=True,
+        data_type="string",
     )
-    ##Convert competitor_websites to a list
-    competitor_websites = waveassist.fetch_data("competitor_websites")
-    if competitor_websites:
-        competitor_websites = competitor_websites.split(",")
-        competitor_websites = [website.strip() for website in competitor_websites]
-        waveassist.store_data("competitor_websites_list", competitor_websites)
-    else:
-        waveassist.store_data("competitor_websites_list", [])
-    
-    ##Clean up website_url for Crawlee compatibility
-    website_url = waveassist.fetch_data("website_url")
-    if website_url:
+    competitor_websites_raw = waveassist.fetch_data("competitor_websites", default="")
+    competitor_websites = []
+    if competitor_websites_raw and isinstance(competitor_websites_raw, str):
+        competitor_websites = [w.strip() for w in competitor_websites_raw.split(",") if w.strip()]
+    waveassist.store_data("competitor_websites_list", competitor_websites, data_type="json")
+
+    website_url = waveassist.fetch_data("website_url", default="")
+    if website_url and isinstance(website_url, str):
         website_url = website_url.strip()
-        # Convert http:// to https://
         if website_url.startswith("http://"):
             website_url = website_url.replace("http://", "https://", 1)
-        # Add https:// if no protocol is present
-        elif not website_url.startswith("https://"):
+        elif website_url and not website_url.startswith("https://"):
             website_url = f"https://{website_url}"
-        waveassist.store_data("website_url", website_url)
+    if website_url:
+        waveassist.store_data("website_url", website_url, data_type="string")
 
 print("WaveContent: Credits check complete and initialization finished.")
 

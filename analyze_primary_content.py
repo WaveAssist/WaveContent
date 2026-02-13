@@ -488,11 +488,15 @@ def _extract_page_features(full_html: str, page_url: str) -> Dict[str, Any]:
 print("WaveContent: Starting merged primary content + SEO analysis (Top 5 segregated pages)...")
 
 try:
-    website_content = waveassist.fetch_data("website_content") or {}
+    website_content = waveassist.fetch_data("website_content", default={})
+    if not isinstance(website_content, dict):
+        website_content = {}
     if not website_content:
         raise ValueError("website_content is required for analyze_primary_content but was not found.")
 
-    segregated = waveassist.fetch_data("segregated_website_content") or {}
+    segregated = waveassist.fetch_data("segregated_website_content", default={})
+    if not isinstance(segregated, dict):
+        segregated = {}
     top_primary_pages = (segregated.get("top_primary_pages") or [])[:5]
 
     # Fallback: if segregation failed, use up to first 5 pages from website_content
@@ -515,40 +519,52 @@ try:
         if not page_id:
             continue
 
-        page_key = f"website_{page_id}_data"
-        page_data = waveassist.fetch_data(page_key) or {}
-        page_url = str(page_data.get("url") or ref_url or "").strip()
+        try:
+            page_key = f"website_{page_id}_data"
+            page_data = waveassist.fetch_data(page_key, default={})
+            if not isinstance(page_data, dict):
+                page_data = {}
+            page_url = str(page_data.get("url") or ref_url or "").strip()
 
-        full_html = page_data.get("full_html") or ""
-        if not full_html:
-            # We can still proceed with whatever we have in summary fields
-            extracted = {
-                "url": page_url,
-                "title": _collapse_ws(str(page_data.get("title") or "")),
-                "meta_description": _collapse_ws(str(page_data.get("meta_description") or "")),
-                "headings": page_data.get("headings") or [],
-                "note": "full_html_missing_for_page",
-            }
-        else:
-            extracted = _extract_page_features(full_html=str(full_html), page_url=page_url)
+            full_html = page_data.get("full_html") or ""
+            if not full_html:
+                # We can still proceed with whatever we have in summary fields
+                extracted = {
+                    "url": page_url,
+                    "title": _collapse_ws(str(page_data.get("title") or "")),
+                    "meta_description": _collapse_ws(str(page_data.get("meta_description") or "")),
+                    "headings": page_data.get("headings") or [],
+                    "note": "full_html_missing_for_page",
+                }
+            else:
+                extracted = _extract_page_features(full_html=str(full_html), page_url=page_url)
 
-        extracted_pages.append(
-            {
-                "page_id": page_id,
-                "url": page_url,
-                "extracted": extracted,
-            }
-        )
+            extracted_pages.append(
+                {
+                    "page_id": page_id,
+                    "url": page_url,
+                    "extracted": extracted,
+                }
+            )
+        except Exception as e:
+            print(f"WaveContent: Error extracting page {page_id}: {e}")
+            extracted_pages.append(
+                {
+                    "page_id": page_id,
+                    "url": ref_url or "",
+                    "extracted": {"error": str(e)},
+                }
+            )
+        waveassist.store_data("primary_pages_extracted_data", extracted_pages, data_type="json")
 
     if not extracted_pages:
         raise ValueError("No usable pages extracted for analysis.")
 
-    # Store extracted non-HTML page data for downstream debugging/visibility
-    waveassist.store_data("primary_pages_extracted_data", extracted_pages)
+    waveassist.store_data("primary_pages_extracted_data", extracted_pages, data_type="json")
     model_name = "google/gemini-3-flash-preview"
 
     pages_json = json.dumps(extracted_pages, default=str)
-    website_url = website_content.get("url") or waveassist.fetch_data("website_url")
+    website_url = website_content.get("url") or waveassist.fetch_data("website_url", default="")
 
     prompt = f"""
 You are an expert content strategist, SEO specialist, and LLM-readability specialist.
@@ -599,21 +615,21 @@ Top pages extracted data (JSON):
     )
 
     if result:
-        data = result.model_dump(by_alias=True)
-        waveassist.store_data("primary_content_suggestions", data.get("primary_content_suggestions"))
-        waveassist.store_data("seo_report", data.get("seo_report"))
+        data = result.model_dump()
+        waveassist.store_data("primary_content_suggestions", data.get("primary_content_suggestions") or [], data_type="json")
+        waveassist.store_data("seo_report", data.get("seo_report") or {}, data_type="json")
         print(
             f"WaveContent: Stored primary_content_suggestions + seo_report for {len(extracted_pages)} primary pages."
         )
     else:
-        waveassist.store_data("primary_content_suggestions", None)
-        waveassist.store_data("seo_report", None)
+        waveassist.store_data("primary_content_suggestions", [], data_type="json")
+        waveassist.store_data("seo_report", {}, data_type="json")
         print("WaveContent: No result from LLM when analyzing primary content + SEO.")
 
 except Exception as e:
     print(f"WaveContent: Error while analyzing primary content + SEO: {e}")
-    waveassist.store_data("primary_content_suggestions", None)
-    waveassist.store_data("seo_report", None)
+    waveassist.store_data("primary_content_suggestions", [], data_type="json")
+    waveassist.store_data("seo_report", {}, data_type="json")
     raise
 
 

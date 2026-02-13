@@ -34,13 +34,15 @@ class CompetitorAnalysisResult(BaseModel):
 
 print("WaveContent: Starting competitor analysis...")
 
-# Fetch required data
-competitor_data = waveassist.fetch_data("competitor_data") or []
-website_content = waveassist.fetch_data("website_content")
+competitor_data_raw = waveassist.fetch_data("competitor_data", default=[])
+competitor_data = competitor_data_raw if isinstance(competitor_data_raw, list) else []
+website_content = waveassist.fetch_data("website_content", default={})
+if not isinstance(website_content, dict):
+    website_content = {}
 
-customer_url = website_content.get("url") if website_content else None
+customer_url = website_content.get("url")
 customer_pages_summary = []
-if website_content and website_content.get("pages"):
+if website_content.get("pages"):
     # Include lightweight summaries of customer pages for context
     for page in website_content.get("pages", [])[:5]:  # Limit to first 5 pages
         customer_pages_summary.append(
@@ -120,8 +122,8 @@ try:
     )
 
     if result:
-        analysis_data = result.model_dump(by_alias=True)
-        waveassist.store_data("competitor_analysis", analysis_data)
+        analysis_data = result.model_dump()
+        waveassist.store_data("competitor_analysis", analysis_data, data_type="json")
         print(
             f"WaveContent: Competitor analysis stored as 'competitor_analysis' for {len(analysis_data.get('competitor_data', []))} competitors."
         )
@@ -130,6 +132,7 @@ try:
         waveassist.store_data(
             "competitor_analysis",
             {"competitor_data": []},
+            data_type="json",
         )
 
 except Exception as e:
@@ -137,6 +140,7 @@ except Exception as e:
     waveassist.store_data(
         "competitor_analysis",
         {"competitor_data": []},
+        data_type="json",
     )
     raise
 
