@@ -1,12 +1,5 @@
 <h1 align="center">WaveContent: AI-Powered Content Strategist</h1>
 
-<p align="center">
-  <a href="https://waveassist.io">
-    <img src="https://img.shields.io/badge/Deploy_with-WaveAssist-007F3B" alt="Deploy with WaveAssist" />
-  </a>
-  <img src="https://img.shields.io/badge/WaveContent-content%20strategy%20report-blue" alt="WaveContent Badge" />
-</p>
-
 ---
 
 ## Overview
@@ -18,7 +11,7 @@ WaveContent is an AI-powered content strategist. The intelligence of a marketing
 ## One-Click Deploy on WaveAssist (Recommended)
 
 <p>
-  <a href="https://waveassist.io" target="_blank">
+  <a href="https://waveassist.io/assistants/wavecontent" target="_blank">
     <img src="https://waveassist.io/images/templates/Button.png" alt="Deploy on WaveAssist" width="230" />
   </a>
 </p>
