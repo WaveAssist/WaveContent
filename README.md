@@ -1,10 +1,17 @@
-<h1 align="center">WaveContent: AI-Powered Content Strategist</h1>
+<h1 align="center">WaveContent - Your AI Content Strategist</h1>
+
+<p align="center">
+  <a href="https://waveassist.io/assistants/wavecontent">
+    <img src="https://img.shields.io/badge/Deploy_with-WaveAssist-007F3B" alt="Deploy with WaveAssist" />
+  </a>
+  <img src="https://img.shields.io/badge/WaveContent-content%20strategy%20report-blue" alt="WaveContent Badge" />
+</p>
 
 ---
 
 ## Overview
 
-WaveContent is an AI-powered content strategist. The intelligence of a marketing agency, the speed of AI. It crawls your website, segments your pages, analyzes your **top primary pages** for content quality + SEO + LLM readability, benchmarks competitors' **content strategy**, mines **People Also Ask / Reddit** for real questions, optionally analyzes your **Twitter/X presence**, and then emails a polished report (HTML + PDF).
+WaveContent is an AI-powered workflow that analyzes your website, benchmarks competitors, and delivers actionable SEO and content recommendations.
 
 ---
 
